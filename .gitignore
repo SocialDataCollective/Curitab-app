@@ -6,6 +6,8 @@
 *.pid
 *.gz
 *.swp
+*.png
+*.jpg
 
 pids
 logs
