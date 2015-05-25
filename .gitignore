@@ -6,7 +6,9 @@
 *.pid
 *.gz
 *.swp
+
 *.png
+*.mp4
 *.jpg
 
 pids
