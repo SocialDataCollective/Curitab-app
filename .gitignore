@@ -6,6 +6,8 @@
 *.pid
 *.gz
 *.swp
+*.png
+*.jpg
 
 pids
 logs
@@ -15,5 +17,5 @@ tmp
 npm-debug.log
 node_modules
 
-img
-icons
+img/**
+icons/**
