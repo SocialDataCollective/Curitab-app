@@ -1,5 +1,6 @@
 $(document).ready(function () {
 	"use strict";
+
 	var backgrounds = [{
 		logo: "../icons/pepsi-logo.png",
 		brand: "Pepsi",
@@ -177,14 +178,16 @@ $(document).ready(function () {
 		question: "Do you own anything from Christian Dior?"
 	}];
 
-	function getRandom(array) {
+	var clearBg = [];
+
+	function getRandomBg(array) {
 		var num = Math.floor(Math.random() * (array.length));
 		return array[num];
 	}
 
 	function changeBg(bg_array) {
 
-		var brand = getRandom(bg_array);
+		var brand = getRandomBg(bg_array);
 		var imgUrl = '"' + brand.filename + '"';
 		var logoUrl = '"' + brand.logo + '"';
 		var back = document.getElementById('bg');
@@ -203,10 +206,6 @@ $(document).ready(function () {
 
 	changeBg(backgrounds);
 
-	function attachAnswerListener() {
-
-	}
-
 	function listenForAnswer() {
 		var answerChoices = $('.btn-answers');
 		var question = document.getElementById('questionHolder').innerText;
@@ -219,23 +218,27 @@ $(document).ready(function () {
 
 	listenForAnswer();
 
-	var AnswerStorage = function (question, answer) {
+	var AnswerStorage = function (question, answer, userEmail) {
+		this.user = userEmail;
 		this.question = question;
 		this.answer = answer;
 	};
 
 	function recordAnswer(ques, ans) {
-		// chrome.storage.sync({
-		// 	'question': question,
-		// 	'answer': ans
-		// })
-		var store = new AnswerStorage(ques, ans);
-		sendAnswer(store);
-		$('#question').remove();
+		var userEmail = '';
+		chrome.storage.sync.get('user_email', function (obj) {
+			userEmail = obj.user_email;
+			if (userEmail != '') {
+				var store = new AnswerStorage(ques, ans, userEmail);
+				sendAnswer(store);
+				$('#question').remove();
+			}
+		});
+
 	}
 
 	function sendAnswer(storedAnswer) {
-		$.post('http://localhost:3000/api/url', storedAnswer);
+		$.post('http://localhost:3000/api/answer', storedAnswer);
 	}
 
 	function removeQuestion() {
@@ -257,7 +260,7 @@ $(document).ready(function () {
 	// 	return "";
 	// }
 
-	function xhrWithAuth(method, url, interactive, callback) {
+	function xhrWithAuth(method, url, callback) {
 		var access_token;
 
 		var retry = true;
@@ -272,7 +275,6 @@ $(document).ready(function () {
 					console.log(chrome.runtime.lastError);
 					return;
 				}
-
 				access_token = token;
 				requestStart();
 			});
@@ -305,13 +307,18 @@ $(document).ready(function () {
 		$('#loginButton').unbind('click').bind('click', function () {
 			console.log('click');
 			getUserInfo();
-		})
+		});
 	}
 
 	function getUserInfo() {
 		xhrWithAuth('GET',
 			'https://www.googleapis.com/plus/v1/people/me',
 			onUserInfoFetched);
+		chrome.identity.getProfileUserInfo(function (obj) {
+			console.log(obj.email);
+			$.post('http://localhost:3000/api/user', obj);
+		});
+
 	}
 
 	function onUserInfoFetched(error, status, response) {
@@ -325,12 +332,6 @@ $(document).ready(function () {
 		}
 	}
 });
-// chrome.identity.getAuthToken({
-// 	'interactive': true
-// }, function (token) {
-// 	console.log(token);
-//
-// });
 
 // function getCookies(domain, name, callback) {
 // 		chrome.cookies.get({

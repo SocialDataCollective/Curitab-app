@@ -23,6 +23,8 @@
       "https://www.googleapis.com/auth/plus.login"
     ]
   },
-  "permissions": ["identity", "cookies", "tabs", "storage", "contextMenus"],
+  "permissions": ["identity", "identity.email", "cookies", "tabs", "storage",
+    "contextMenus"
+  ],
   "version": "0.1.0"
 }
