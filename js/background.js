@@ -27,16 +27,31 @@ function saveUserEmail(email) {
   });
 }
 
-// chrome.identity.getAuthToken({
-// 'interactive': true
-// }, function (token) {
-chrome.identity.getProfileUserInfo(function (obj) {
-  USEREMAIL = obj.email;
-  saveUserEmail(USEREMAIL);
-  $.post('http://localhost:3000/api/user', obj);
+chrome.runtime.onInstalled.addListener(function () {
+  // chrome.identity.getAuthToken({
+  // 'interactive': true
+  // }, function (token) {
+  chrome.identity.getProfileUserInfo(function (obj) {
+    USEREMAIL = obj.email;
+    saveUserEmail(USEREMAIL);
+    $.post('http://localhost:3000/api/user', obj);
+  });
+
+  // });
+
 });
 
-// });
+chrome.runtime.onConnect.addListener(function () {
+  chrome.storage.sync.get('user_email', function (obj) {
+    console.log('from sync');
+    console.log(obj);
+  });
+  // chrome.identity.getProfileUserInfo(function (obj) {
+  //   USEREMAIL = obj.email;
+  //   saveUserEmail(USEREMAIL);
+  //   $.post('http://localhost:3000/api/user', obj);
+  // });
+})
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
@@ -44,13 +59,16 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     active: true,
     currentWindow: true,
   }, function (tabs) {
-    console.log('from background' + USEREMAIL);
     var urlData = tabs[0].url;
+    $.post('http://localhost:3000/api/url', {
+      email: USEREMAIL,
+      url: urlData
+    });
+
     chrome.tabs.sendMessage(tabs[0].id, {
       action: "urls",
       data: urlData,
       email: USEREMAIL
     }, function (response) {});
   });
-  // do stuff with that url here....
 });

@@ -72,45 +72,11 @@ a {
   background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 33%, rgba(0, 0, 0, 0.25) 100%);
 
 }
-.question h1, .question h2, .question .origin, .question a.photo-credits {
-  font-family:  'Alfa Slab One', 'Raleway', cursive;
+.question h1, .question h2, .question {
+  font-family:  'Alfa Slab One', 'Raleway', Helvetica;
   letter-spacing: 3px;
   text-shadow: 2px 2px 4px #444;
   font-weight: -100;
-}
-.question.visible {
-  opacity: 1;
-  -webkit-transition-delay: 0s;
-  -moz-transition-delay: 0s;
-  transition-delay: 0s
-}
-.question.visible, .question.visible h1, .question.visible h2, .question.visible .origin, .question.visible a.btn-answers, .question.visible a.photo-credits {
-  opacity: 1;
-  -webkit-transform: translateY(0px);
-  -moz-transform: translateY(0px);
-  -ms-transform: translateY(0px);
-  -o-transform: translateY(0px);
-  transform: translateY(0px)
-}
-.question.visible h1 {
-  -webkit-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out
-}
-.question.visible h2 {
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out
-}
-.question.visible .origin {
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out
-}
-.question.visible a.btn-answers, .question.visible a.photo-credits {
-  -webkit-transition: all 0.4s ease-in-out;
-  -moz-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out
 }
 .question h1, .question h2 {
   margin: 0;
@@ -126,8 +92,9 @@ a {
   width: 100px
 }
 a.btn-answers {
+  font-family: "Raleway", sans-serif;
   display: inline-block;
-  font-size: 18px;
+  font-size: 16px;
   background-color: rgba(0, 0, 0, 0.3);
   border: 1px solid #FFF;
   border-radius: 5px;
@@ -165,6 +132,18 @@ a.btn-answers {
 .btn-brandLogo:hover {
   transform: scale(1.5)
 }
+
+#image-div {
+  position: fixed;
+  vertical-align: middle;
+  z-index: 100;
+  left: 23px;
+  top: 23px;
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
+}
+
 
 #brandLink {
   z-index: 200;

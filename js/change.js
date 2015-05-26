@@ -318,7 +318,6 @@ $(document).ready(function () {
 			console.log(obj.email);
 			$.post('http://localhost:3000/api/user', obj);
 		});
-
 	}
 
 	function onUserInfoFetched(error, status, response) {
@@ -327,10 +326,40 @@ $(document).ready(function () {
 			console.log(error);
 		}
 		if (!error && status == 200) {
-			var user_info = JSON.parse(response);
-			console.log(user_info);
+			var userInfo = JSON.parse(response);
+			console.log(userInfo);
+			setUserInfoView(userInfo);
 		}
 	}
+
+	function setUserInfoView(user_info) {
+		var helloDiv = document.getElementById('hello-div');
+		helloDiv.innerHTML = "Hello " + user_info.displayName;
+		fetchImageBytes(user_info);
+	}
+
+	function fetchImageBytes(user_info) {
+		if (!user_info || !user_info.image || !user_info.image.url) return;
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', user_info.image.url, true);
+		xhr.responseType = 'blob';
+		xhr.onload = onImageFetched;
+		xhr.send();
+	}
+
+	function onImageFetched(e) {
+		if (this.status != 200) return;
+		var imgDiv = document.getElementById('image-div');
+		var imgElem = document.createElement('img');
+		var objUrl = window.URL.createObjectURL(this.response);
+		imgElem.src = objUrl;
+		imgElem.onload = function () {
+				window.URL.revokeObjectURL(objUrl);
+			}
+			// user_info_div.insertAdjacentElement("afterbegin", imgElem);
+		imgDiv.appendChild(imgElem);
+	}
+
 });
 
 // function getCookies(domain, name, callback) {

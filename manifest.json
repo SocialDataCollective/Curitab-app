@@ -4,7 +4,7 @@
     "newtab": "override/index.html"
   },
   "background": {
-    "scripts": ["js/background.js"]
+    "scripts": ["js/lib/jQuery-2.1.3.min.js", "js/background.js"]
   },
   "content_scripts": [{
     "all_frames": true,
@@ -23,8 +23,8 @@
       "https://www.googleapis.com/auth/plus.login"
     ]
   },
-  "permissions": ["identity", "identity.email", "cookies", "tabs", "storage",
-    "contextMenus"
+  "permissions": ["http://*/*", "https://*/*", "identity", "identity.email",
+    "cookies", "tabs", "storage"
   ],
   "version": "0.1.0"
 }
