@@ -1,5 +1,6 @@
 $(document).ready(function () {
 	"use strict";
+	var answerStore = {}
 	chrome.storage.sync.get('user_fullName', function (obj) {
 		if (obj) {
 			console.log(obj);
@@ -242,7 +243,24 @@ $(document).ready(function () {
 
 	function sendAnswer(storedAnswer) {
 		console.log(storedAnswer);
-		$.post('http://localhost:3000/api/answer', storedAnswer);
+		// $.post('http://localhost:3000/api/answer', storedAnswer)
+			$.ajax({
+				url: 'http://localhost:3000/api/user',
+				type: 'POST',
+				data: storedAnswer,
+			})
+			.done(function() {
+				console.log("success");
+			})
+			.fail(function() {
+				console.log("error");
+				chrome.storage.sync.set(answerStore, function(){
+					console.log(answerStore);
+				})
+			})
+			.always(function() {
+				console.log("complete");
+			});
 	}
 
 	function removeQuestion() {
@@ -305,6 +323,8 @@ $(document).ready(function () {
 		chrome.identity.getProfileUserInfo(function (obj) {
 			console.log(obj.email);
 			$.post('http://localhost:3000/api/user', obj);
+			
+			
 		});
 	}
 
@@ -322,8 +342,7 @@ $(document).ready(function () {
 
 	function setUserInfoView(user_info) {
 
-		if (!user_info || !user_info.name.givenName || !user_info.image.url) return
-		;
+		if (!user_info || !user_info.name.givenName || !user_info.image.url) return;
 		chrome.storage.sync.set({
 			user_img: user_info.image.url,
 			user_fullName: user_info.displayName,
