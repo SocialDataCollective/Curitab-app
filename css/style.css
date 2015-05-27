@@ -1,5 +1,5 @@
-@import url(http://fonts.googleapis.com/css?family=Alfa+Slab+One);
-@import url(http://fonts.googleapis.com/css?family=Raleway);
+/* @import url(http://fonts.googleapis.com/css?family=Alfa+Slab+One); */
+/* @import url(http://fonts.googleapis.com/css?family=Raleway); */
 
 /* reset */
 body, html {
@@ -12,6 +12,9 @@ body, html {
   content: "";
   display: table;
   clear: both;
+}
+.hidden {
+  display: none;
 }
 li{
   list-style: none;
@@ -31,22 +34,15 @@ a {
   color: inherit;
   text-decoration: none
 }
-.btn {
-  display: inline-block;
-  padding: 4px;
-  background-color: #FFF;
-  border-radius: 3px;
-}
-.btn img {
-  display: block
-}
-.btn-refresh-location, .btn-info {
-  border-radius: 50px;
-  font
-  opacity: 0.5;
-}
-.btn-refresh-location:hover, .btn-info:hover {
-  opacity: 1
+
+
+.transparent-black{
+  background: -moz-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.25) 33%, rgba(0, 0, 0, 0.25) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, transparent), color-stop(33%, rgba(0, 0, 0, 0.25)), color-stop(100%, rgba(0, 0, 0, 0.25)));
+  background: -webkit-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.25) 33%, rgba(0, 0, 0, 0.25) 100%);
+  background: -o-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.25) 33%, rgba(0, 0, 0, 0.25) 100%);
+  background: -ms-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.25) 33%, rgba(0, 0, 0, 0.25) 100%);
+  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 33%, rgba(0, 0, 0, 0.25) 100%);
 }
 .question {
   position: absolute;
@@ -61,16 +57,6 @@ a {
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
-  -webkit-transition-delay: 0.1s;
-  -moz-transition-delay: 0.1s;
-  transition-delay: 0.1s;
-  background: -moz-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.25) 33%, rgba(0, 0, 0, 0.25) 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, transparent), color-stop(33%, rgba(0, 0, 0, 0.25)), color-stop(100%, rgba(0, 0, 0, 0.25)));
-  background: -webkit-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.25) 33%, rgba(0, 0, 0, 0.25) 100%);
-  background: -o-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.25) 33%, rgba(0, 0, 0, 0.25) 100%);
-  background: -ms-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.25) 33%, rgba(0, 0, 0, 0.25) 100%);
-  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.25) 33%, rgba(0, 0, 0, 0.25) 100%);
-
 }
 .question h1, .question h2, .question {
   font-family:  'Alfa Slab One', 'Raleway', Helvetica;
@@ -98,7 +84,7 @@ a.btn-answers {
   background-color: rgba(0, 0, 0, 0.3);
   border: 1px solid #FFF;
   border-radius: 5px;
-  padding: 0.3em 1em;
+  padding: 8px;
   color: #FFF;
   text-decoration: none;
   margin-bottom: 2em;
@@ -121,10 +107,10 @@ a.btn-answers {
   background-color: rgba(255, 255, 255, 0.9);;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 125%;
+  background-size: 100%;
   /* background-size: cover; */
   /*background-attachment: fixed;*/
-  background-image: url("../icons/vogue-logo-large.png");
+  background-image: url("../icons/vogue-logo.png");
   overflow: hidden;
   transition: .4s;
 }
@@ -133,15 +119,12 @@ a.btn-answers {
   transform: scale(1.5)
 }
 
-#image-div {
+#logged-div {
   position: fixed;
   vertical-align: middle;
   z-index: 100;
   left: 23px;
   top: 23px;
-  width: 70px;
-  height: 70px;
-  border-radius: 10px;
 }
 
 
@@ -179,4 +162,15 @@ div.vignette:after {
  height: 100%;
  z-index: 2;
  content: "";
+}
+
+.text-display {
+  font-family: "Raleway", sans-serif;
+  display: inline-block;
+  font-size: 16px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  padding: 8px;
+  color: #FFF;
+  margin-bottom: 2em;
 }

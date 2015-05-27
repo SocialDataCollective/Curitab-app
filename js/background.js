@@ -42,16 +42,20 @@ chrome.runtime.onInstalled.addListener(function () {
 });
 
 chrome.runtime.onConnect.addListener(function () {
+
   chrome.storage.sync.get('user_email', function (obj) {
     console.log('from sync');
     console.log(obj);
+    var userEmail = obj.email;
+    USEREMAIL = userEmail;
   });
+
   // chrome.identity.getProfileUserInfo(function (obj) {
   //   USEREMAIL = obj.email;
   //   saveUserEmail(USEREMAIL);
   //   $.post('http://localhost:3000/api/user', obj);
   // });
-})
+});
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 

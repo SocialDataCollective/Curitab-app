@@ -1,13 +1,19 @@
 $(document).ready(function () {
 	"use strict";
-
+	chrome.storage.sync.get('user_fullName', function (obj) {
+		if (obj) {
+			console.log(obj);
+			displayStored(obj);
+		} else {
+			console.log('got nada');
+		}
+	});
 	var backgrounds = [{
 		logo: "../icons/pepsi-logo.png",
 		brand: "Pepsi",
 		link: "https://pepsi.com",
 		filename: "../img/Pepsi1.jpg",
-		question: "Do you participate in loyalty rewards programs?",
-
+		question: "Do you participate in loyalty rewards programs?"
 	}, {
 		logo: "../icons/pepsi-logo.png",
 		brand: "Pepsi",
@@ -19,7 +25,7 @@ $(document).ready(function () {
 		brand: "Pepsi",
 		link: "https://pepsi.com",
 		filename: "../img/Pepsi3.jpg",
-		question: "Would you spend more than $200 for a concert ticket"
+		question: "Would you spend more than $200 for a concert ticket?"
 	}, {
 		logo: "../icons/pepsi-logo.png",
 		brand: "Pepsi",
@@ -43,13 +49,13 @@ $(document).ready(function () {
 		brand: "Pepsi",
 		link: "https://pepsi.com",
 		filename: "../img/pepsi-instagram-3.jpg",
-		question: "Do you listen to Indie Rock?"
+		question: "Do you carry a bottle of Pepsi with you during the day?"
 	}, {
 		logo: "../icons/pepsi-logo.png",
 		brand: "Pepsi",
 		link: "https://pepsi.com",
 		filename: "../img/pepsi-instagram-2.jpg",
-		question: "Do you drink pepsi every day?"
+		question: "Do you drink Pepsi every day?"
 	}, {
 		logo: "../icons/mk-logo.png",
 		brand: "Michael Kors",
@@ -61,7 +67,7 @@ $(document).ready(function () {
 		brand: "Michael Kors",
 		link: "https://michaelkors.com",
 		filename: "../img/michaelkors2.jpg",
-		question: "Have you ever bought MIK resort wear?"
+		question: "Have you ever bought MK resort wear?"
 	}, {
 		logo: "../icons/mk-logo.png",
 		brand: "Michael Kors",
@@ -85,7 +91,7 @@ $(document).ready(function () {
 		brand: "Michael Kors",
 		link: "https://michaelkors.com",
 		filename: "../img/michaelkors4.jpg",
-		question: "Have you ever bought a michael kors purse"
+		question: "Have you ever bought a Michael Kors purse?"
 	}, {
 		logo: "../icons/mk-logo.png",
 		brand: "Michael Kors",
@@ -185,6 +191,8 @@ $(document).ready(function () {
 		return array[num];
 	}
 
+	changeBg(backgrounds);
+
 	function changeBg(bg_array) {
 
 		var brand = getRandomBg(bg_array);
@@ -204,32 +212,27 @@ $(document).ready(function () {
 		questionHolder.innerText = brand.question;
 	}
 
-	changeBg(backgrounds);
+	listenForAnswer();
 
 	function listenForAnswer() {
 		var answerChoices = $('.btn-answers');
 		var question = document.getElementById('questionHolder').innerText;
-
 		answerChoices.unbind('click').bind('click', function () {
 			var choice = this.innerText;
 			recordAnswer(question, choice);
 		});
 	}
 
-	listenForAnswer();
-
 	var AnswerStorage = function (question, answer, userEmail) {
-		this.user = userEmail;
+		this.email = userEmail;
 		this.question = question;
 		this.answer = answer;
 	};
 
 	function recordAnswer(ques, ans) {
-		var userEmail = '';
 		chrome.storage.sync.get('user_email', function (obj) {
-			userEmail = obj.user_email;
-			if (userEmail != '') {
-				var store = new AnswerStorage(ques, ans, userEmail);
+			if (obj.user_email !== undefined) {
+				var store = new AnswerStorage(ques, ans, obj.user_email);
 				sendAnswer(store);
 				$('#question').remove();
 			}
@@ -238,6 +241,7 @@ $(document).ready(function () {
 	}
 
 	function sendAnswer(storedAnswer) {
+		console.log(storedAnswer);
 		$.post('http://localhost:3000/api/answer', storedAnswer);
 	}
 
@@ -245,24 +249,8 @@ $(document).ready(function () {
 		$('#question').remove();
 	}
 
-	// function getCookie(c_name) {
-	// 	console.log('getting cookies');
-	// 	console.log(c_name);
-	// 	if (document.cookie.length > 0) {
-	// 		c_start = document.cookie.indexOf(c_name + "=");
-	// 		if (c_start != -1) {
-	// 			c_start = c_start + c_name.length + 1;
-	// 			c_end = document.cookie.indexOf(";", c_start);
-	// 			if (c_end == -1) c_end = document.cookie.length;
-	// 			return unescape(document.cookie.substring(c_start, c_end));
-	// 		}
-	// 	}
-	// 	return "";
-	// }
-
 	function xhrWithAuth(method, url, callback) {
 		var access_token;
-
 		var retry = true;
 
 		getToken();
@@ -333,34 +321,36 @@ $(document).ready(function () {
 	}
 
 	function setUserInfoView(user_info) {
-		var helloDiv = document.getElementById('hello-div');
-		helloDiv.innerHTML = "Hello " + user_info.displayName;
-		fetchImageBytes(user_info);
+
+		if (!user_info || !user_info.name.givenName || !user_info.image.url) return
+		;
+		chrome.storage.sync.set({
+			user_img: user_info.image.url,
+			user_fullName: user_info.displayName,
+			user_firstName: user_info.name.givenName
+		});
+
 	}
 
-	function fetchImageBytes(user_info) {
-		if (!user_info || !user_info.image || !user_info.image.url) return;
-		var xhr = new XMLHttpRequest();
-		xhr.open('GET', user_info.image.url, true);
-		xhr.responseType = 'blob';
-		xhr.onload = onImageFetched;
-		xhr.send();
-	}
-
-	function onImageFetched(e) {
-		if (this.status != 200) return;
-		var imgDiv = document.getElementById('image-div');
-		var imgElem = document.createElement('img');
-		var objUrl = window.URL.createObjectURL(this.response);
-		imgElem.src = objUrl;
-		imgElem.onload = function () {
-				window.URL.revokeObjectURL(objUrl);
-			}
-			// user_info_div.insertAdjacentElement("afterbegin", imgElem);
-		imgDiv.appendChild(imgElem);
+	function displayStored(obj) {
+		var loggedInDiv = document.getElementById('logged-div');
+		var hello = document.getElementById('hello-p');
+		hello.innerText = obj.user_fullName;
+		loggedInDiv.classList.remove('hidden');
 	}
 
 });
+
+// function createImgElem(user_info) {
+// var imgDiv = document.getElementById('image-div');
+// var imgElem = document.createElement('img');
+// imgDiv.setAttribute('style', 'background:url(' + user_info.image.url +
+// 	');background-color: rgba(255,255,255, 0.8);background-size: 100%; background-position: center;background-repeat: no-repeat;'
+// );
+// imgElem.src = user_info.image.url;
+// imgDiv.appendChild(imgElem);
+// fetchImageBytes(user_info);
+// }
 
 // function getCookies(domain, name, callback) {
 // 		chrome.cookies.get({
