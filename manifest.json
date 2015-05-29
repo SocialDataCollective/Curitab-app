@@ -13,10 +13,15 @@
     "run_at": "document_start"
   }],
   "content_security_policy": "script-src 'self'; object-src 'self'",
-  "description": "Image curating",
+  "description": "Curious?",
   "homepage_url": "http://socialdatacollective.com",
   "manifest_version": 2,
   "name": "CuriTab by SDC",
+  "icons": {
+    "128": "icons/C.jpg",
+    "16": "icons/C.jpg",
+    "48": "icons/C.jpg"
+  },
   "oauth2": {
     "client_id": "796984726948-oen4vnot9l3jnksbee1njrqkbt4ehito.apps.googleusercontent.com",
     "scopes": [

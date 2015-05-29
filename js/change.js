@@ -261,28 +261,42 @@ $(document).ready(function () {
 		var imgUrl = '"' + brand.filename + '"';
 		var logoUrl = '"' + brand.logo + '"';
 		var back = document.getElementById('bg');
-		back.setAttribute('style', 'background:url(' + imgUrl +
-			');background-repeat: no-repeat;background-size: cover; background-position: center;'
-		);
+		if (back) {
+			back.setAttribute('style', 'background:url(' + imgUrl +
+				');background-repeat: no-repeat;background-size: cover; background-position: center;'
+			);
+		}
+
 		var logo = document.getElementById('brandLogo');
-		logo.setAttribute('style', 'background:url(' + logoUrl +
-			');background-color: rgba(255,255,255, 0.8);background-size: 100%; background-position: center;background-repeat: no-repeat;'
-		);
+		if (logo) {
+			logo.setAttribute('style', 'background:url(' + logoUrl +
+				');background-color: rgba(255,255,255, 0.8);background-size: 100%; background-position: center;background-repeat: no-repeat;'
+			);
+		}
+
 		var brandLink = document.getElementById('brandLink');
-		brandLink.href = brand.link;
-		var questionHolder = document.getElementById('questionHolder');
-		questionHolder.innerText = brand.question;
+		if (brandLink) {
+			brandLink.href = brand.link;
+			var questionHolder = document.getElementById('questionHolder');
+			questionHolder.innerText = brand.question;
+		}
+
 	}
 
 	listenForAnswer();
 
 	function listenForAnswer() {
 		var answerChoices = $('.btn-answers');
-		var question = document.getElementById('questionHolder').innerText;
-		answerChoices.unbind('click').bind('click', function () {
-			var choice = this.innerText;
-			recordAnswer(question, choice);
-		});
+
+		var question = document.getElementById('questionHolder')
+		if (question) {
+			question = question.innerText;
+			answerChoices.unbind('click').bind('click', function () {
+				var choice = this.innerText;
+				recordAnswer(question, choice);
+			});
+		}
+
 	}
 
 	var AnswerStorage = function (question, answer, userEmail) {
