@@ -9,7 +9,7 @@
   "content_scripts": [{
     "all_frames": true,
     "matches": ["<all_urls>", "http://*/*", "https://*/*"],
-    "js": ["js/lib/jQuery-2.1.3.min.js", "js/change.js", "js/locals.js"],
+    "js": ["js/lib/jQuery-2.1.3.min.js", "js/change.js"],
     "run_at": "document_start"
   }],
   "content_security_policy": "script-src 'self'; object-src 'self'",

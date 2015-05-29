@@ -1,16 +1,46 @@
+// window.onload = function () {
+// 	//Get submit button
+// 	var submitbutton = document.getElementById("newSearch");
+// 	//Add listener to submit button
+// 	if (submitbutton.addEventListener) {
+// 		submitbutton.addEventListener("click", function () {
+// 			if (submitbutton.value == 'Search') { //Customize this text string to whatever you want
+// 				submitbutton.value = '';
+// 			}
+// 			this.form.onsubmit();
+// 			return false;
+// 		});
+// 	}
+// 	console.log(submitbutton);
+// };
 $(document).ready(function () {
 	"use strict";
-	var answerStore = {
-		answers: []
-	};
-	chrome.storage.sync.get(['user_fullName', 'answerStore'], function (obj) {
-		if (obj) {
-			console.log(obj);
-			displayStored(obj);
-		} else {
-			console.log('got nada');
+	var NAME, EMAIL;
+	chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
+		//
+		if (msg.action === 'installed') {
+
+			chrome.storage.sync.get(['user_fullName', 'user_email'], function (
+				obj) {
+				if (obj !== undefined) {
+					console.log('from sync');
+					console.log(obj);
+
+					setLocals(obj.user_fullName, obj.user_email);
+					// displayStored(obj);
+				} else {
+					// console.log('got nada');
+				}
+			});
+
 		}
 	});
+
+	function setLocals(name, email) {
+		NAME = name;
+		EMAIL = email;
+	}
+
 	var backgrounds = [{
 			logo: "../icons/pepsi-logo.png",
 			brand: "Pepsi",
@@ -209,17 +239,13 @@ $(document).ready(function () {
 			link: "http://www.washingtonpost.com/politics/courts_law/supreme-court-to-hear-texas-redistricting-case/2015/05/26/ab0c9c80-03b4-11e5-8bda-c7b4e9a8f7ac_story.html",
 			filename: "../img/wpost1.jpg",
 			question: "Do you think the system of federal districting is fair and accurate?"
-		},
-
-		{
+		}, {
 			logo: "../icons/vox-logo.png",
 			brand: "Vox",
 			link: "http://www.vox.com/2015/5/26/8602613/how-to-save-the-world",
 			filename: "../img/vox1.jpg",
 			question: "Do you think the U.S. should spend more on foreign aid?"
-		},
-
-		{
+		}, {
 			logo: "../icons/atlantic-logo.png",
 			brand: "The Atlantic",
 			link: "http://www.theatlantic.com/politics/archive/2015/05/cleveland-consent-decree/394085/",
@@ -232,11 +258,9 @@ $(document).ready(function () {
 	var clearBg = [];
 
 	function logAnswer(storedAnswer) {
-		answerStore.answers.push(storedAnswer);
-		chrome.storage.sync.set({
-				user_answers: answerStore
-			},
-			function () {});
+		// chrome.storage.sync.set({
+		// },
+		// function () {});
 	}
 
 	function getRandomBg(array) {
@@ -287,33 +311,36 @@ $(document).ready(function () {
 			if (obj.user_email !== undefined) {
 				var store = new AnswerStorage(ques, ans, obj.user_email);
 				sendAnswer(store);
-				$('#question').remove();
+				$('#question').addClass('hidden');
+				$('#newSearch').removeClass('hidden');
 			}
 		});
 
 	}
 
 	function sendAnswer(storedAnswer) {
-		console.log(storedAnswer);
+		// console.log(storedAnswer);
 		// $.post('http://localhost:3000/api/answer', storedAnswer)
 		$.ajax({
-				url: 'http://localhost:3000/api/user',
+				// url: 'http://localhost:3000/api/user',
+				url: 'http://45.55.156.90:3000/api/user',
 				type: 'POST',
 				data: storedAnswer,
 			})
 			.done(function () {
-				console.log("success");
+				// console.log("success");
 			})
 			.fail(function () {
-				console.log("error");
-				logAnswer(storedAnswer);
+				// console.log("error");
+				// logAnswer(storedAnswer);
 			})
 			.always(function () {
-				console.log("complete");
+				// console.log("complete");
+
 			});
 	}
 
-	function removeQuestion() {
+	function removeQuestion(callback) {
 		$('#question').remove();
 	}
 
@@ -328,7 +355,7 @@ $(document).ready(function () {
 				'interactive': true
 			}, function (token) {
 				if (chrome.runtime.lastError) {
-					console.log(chrome.runtime.lastError);
+					// console.log(chrome.runtime.lastError);
 					return;
 				}
 				access_token = token;
@@ -361,7 +388,7 @@ $(document).ready(function () {
 
 	function listenForLogin() {
 		$('#loginButton').unbind('click').bind('click', function () {
-			console.log('click');
+			// console.log('click');
 			getUserInfo();
 		});
 	}
@@ -371,20 +398,21 @@ $(document).ready(function () {
 			'https://www.googleapis.com/plus/v1/people/me',
 			onUserInfoFetched);
 		chrome.identity.getProfileUserInfo(function (obj) {
-			console.log(obj.email);
-			$.post('http://localhost:3000/api/user', obj);
+			// console.log(obj.email);
+			// $.post('http://localhost:3000/api/user', obj);
+			$.post('http://45.55.156.90:3000/api/user', obj);
 
 		});
 	}
 
 	function onUserInfoFetched(error, status, response) {
-		console.log('fetched');
+		// console.log('fetched');
 		if (error) {
-			console.log(error);
+			// console.log(error);
 		}
 		if (!error && status == 200) {
 			var userInfo = JSON.parse(response);
-			console.log(userInfo);
+			// console.log(userInfo);
 			setUserInfoView(userInfo);
 		}
 	}
@@ -405,7 +433,6 @@ $(document).ready(function () {
 		var loggedInDiv = document.getElementById('logged-div');
 		var hello = document.getElementById('hello-p');
 		hello.innerText = obj.user_fullName;
-		loggedInDiv.classList.remove('hidden');
 	}
 
 });

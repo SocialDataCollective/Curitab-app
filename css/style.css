@@ -1,13 +1,14 @@
 @import url(http://fonts.googleapis.com/css?family=Alfa+Slab+One);
 @import url(http://fonts.googleapis.com/css?family=Raleway);
-
 /* reset */
+
 body, html {
   height: 100%;
   padding: 0px;
   margin: 0px
 }
 /* clearfix */
+
 .container:after, .clearfix:after {
   content: "";
   display: table;
@@ -16,7 +17,7 @@ body, html {
 .hidden {
   display: none;
 }
-li{
+li {
   list-style: none;
 }
 body {
@@ -28,15 +29,14 @@ body {
   color: #222;
 }
 /*  */
+
 a {
   cursor: pointer;
   transition: 0.4s all ease;
   color: inherit;
   text-decoration: none
 }
-
-
-.transparent-black{
+.transparent-black {
   background: -moz-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.25) 33%, rgba(0, 0, 0, 0.25) 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, transparent), color-stop(33%, rgba(0, 0, 0, 0.25)), color-stop(100%, rgba(0, 0, 0, 0.25)));
   background: -webkit-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.25) 33%, rgba(0, 0, 0, 0.25) 100%);
@@ -59,10 +59,9 @@ a {
   transition: all 0.2s ease-in-out;
 }
 .question h1, .question h2, .question {
-  font-family:  'Alfa Slab One', 'Raleway', Helvetica;
+  font-family: 'Alfa Slab One', 'Raleway', Helvetica;
   letter-spacing: 3px;
   text-shadow: 2px 2px 4px #444;
-  font-weight: -100;
 }
 .question h1, .question h2 {
   margin: 0;
@@ -104,21 +103,20 @@ a.btn-answers {
   width: 70px;
   height: 70px;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.9);;
+  background-color: rgba(255, 255, 255, 0.9);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
   /* background-size: cover; */
   /*background-attachment: fixed;*/
+
   background-image: url("../icons/vogue-logo.png");
   overflow: hidden;
   transition: .4s;
 }
-
 .btn-brandLogo:hover {
   transform: scale(1.5)
 }
-
 #logged-div {
   position: fixed;
   vertical-align: middle;
@@ -126,8 +124,6 @@ a.btn-answers {
   left: 23px;
   top: 23px;
 }
-
-
 #brandLink {
   z-index: 200;
 }
@@ -144,26 +140,24 @@ a.btn-answers {
   background-image: url("../img/vogue-tumblr-9.jpg");
   background-repeat: no-repeat;
 }
-
 div.vignette {
   position: relative;
 }
 div.vignette img {
- display: block;
+  display: block;
 }
 div.vignette:after {
- -moz-box-shadow: inset 0 0 14em #000;
- -webkit-box-shadow: inset 0 0 14em #000;
- box-shadow: inset 0 0 14em #000;
- position: absolute;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- z-index: 2;
- content: "";
+  -moz-box-shadow: inset 0 0 14em #000;
+  -webkit-box-shadow: inset 0 0 14em #000;
+  box-shadow: inset 0 0 14em #000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  content: "";
 }
-
 .text-display {
   font-family: "Raleway", sans-serif;
   display: inline-block;
@@ -173,4 +167,47 @@ div.vignette:after {
   padding: 8px;
   color: #FFF;
   margin-bottom: 2em;
+}
+/* search  */
+
+#newSearch::after {}
+.clearspace {
+  clear: both;
+}
+.search{
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  width: 400px;
+  padding:0;
+  margin-bottom: 100px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.search-input {
+  font-family: "Raleway", sans-serif;
+  font-size: 24px;
+  height: 20px;
+  line-height: 24px;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 20px 20px 20px 20px;
+  color: #fff;
+  z-index: 2;
+  background: none;
+  border: none;
+  outline: none;
+  width: 400px;
+}
+::-webkit-input-placeholder {
+   color: rgba(255, 255, 255, 0.5);
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: rgba(255, 255, 255, 0.5);
+}
+::-moz-placeholder {  /* Firefox 19+ */
+  color: rgba(255, 255, 255, 0.5);
+}
+:-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+.search-input:focus{
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
 }

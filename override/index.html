@@ -3,19 +3,15 @@
 
 <head>
   <title>New Tab</title>
-
   <link href="../css/bootstrap.css" rel="stylesheet">
   <link href="../css/style.css" rel="stylesheet">
-
   <script type="text/javascript" src="../js/lib/jQuery-2.1.3.min.js"></script>
-
   <script type="text/javascript" src="../js/change.js"></script>
-
-
 </head>
 
 <body>
   <div id="bg" class="bg vignette">
+
     <div class="hidden " id="logged-div">
         <p class ="text-display" id="hello-p"></p>
       </div>
@@ -23,14 +19,22 @@
     </div>
   <div class="container">
     <nav>
-      <a id="loginButton" class="btn transparent-black text-center">Connect with Google</a>
+
+      <a id="loginButton" class="btn text-center">Connect with Google</a>
       <div id="log"></div>
     </nav>
-    <section id="question" class="question">
-      <h1 id="questionHolder">Are you rocking the flower crown trend this season?</h1>
-      <a href="#" class="transparent-black btn-answers question-link text-center" data="Yes">Yes</a>
-      <a href="#" class="transparent-black btn-answers question-link text-center" data="No">No</a>
-      <a href="#" class="transparent-black btn-answers question-link text-center" data="Curious">Curious</a>
+    <section id="" class="question">
+      <form class="search center-block text-center hidden" id="newSearch" method="get" action="https://google.com/search">
+  		        <input type="text" class="center-block search-input text-center" name="q" size="21" maxlength="120" autocomplete="off" placeholder="Search">
+  		</form>
+      <div class="clearspace"></div>
+
+      <div id="question">
+        <h1 id="questionHolder">Are you rocking the flower crown trend this season?</h1>
+        <a href="#" class="transparent-black btn-answers question-link text-center" data="Yes">Yes</a>
+        <a href="#" class="transparent-black btn-answers question-link text-center" data="No">No</a>
+      </div>
+      <!-- <a href="#" class="transparent-black btn-answers question-link text-center" data="Curious">Curious</a> -->
     </section>
 
     <a id="brandLink" href=""><li class="btn-brandLogo" id="brandLogo"></li></a>
