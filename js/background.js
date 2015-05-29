@@ -55,10 +55,8 @@ chrome.runtime.onInstalled.addListener(function () {
       active: true,
       currentWindow: true,
     }, function (tabs) {
-
       chrome.tabs.sendMessage(tabs[0].id, {
         action: "installed"
-
       });
 
     });
@@ -81,15 +79,9 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     currentWindow: true,
   }, function (tabs) {
     var urlData = tabs[0].url;
-    $.post('http://localhost:3000/api/url', {
+    $.post('http://45.55.156.90:3000/api/url', {
       email: USEREMAIL,
       url: urlData
     });
-
-    // chrome.tabs.sendMessage(tabs[0].id, {
-    //   action: "urls",
-    //   data: urlData,
-    //   email: USEREMAIL
-    // }, function (response) {});
   });
 });

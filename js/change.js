@@ -1,18 +1,3 @@
-// window.onload = function () {
-// 	//Get submit button
-// 	var submitbutton = document.getElementById("newSearch");
-// 	//Add listener to submit button
-// 	if (submitbutton.addEventListener) {
-// 		submitbutton.addEventListener("click", function () {
-// 			if (submitbutton.value == 'Search') { //Customize this text string to whatever you want
-// 				submitbutton.value = '';
-// 			}
-// 			this.form.onsubmit();
-// 			return false;
-// 		});
-// 	}
-// 	console.log(submitbutton);
-// };
 $(document).ready(function () {
 	"use strict";
 	var NAME, EMAIL;
@@ -322,8 +307,8 @@ $(document).ready(function () {
 		// console.log(storedAnswer);
 		// $.post('http://localhost:3000/api/answer', storedAnswer)
 		$.ajax({
-				// url: 'http://localhost:3000/api/user',
-				url: 'http://45.55.156.90:3000/api/user',
+				// url: 'http://localhost:3000/api/answer',
+				url: 'http://45.55.156.90:3000/api/answer',
 				type: 'POST',
 				data: storedAnswer,
 			})
@@ -436,54 +421,3 @@ $(document).ready(function () {
 	}
 
 });
-
-// function createImgElem(user_info) {
-// var imgDiv = document.getElementById('image-div');
-// var imgElem = document.createElement('img');
-// imgDiv.setAttribute('style', 'background:url(' + user_info.image.url +
-// 	');background-color: rgba(255,255,255, 0.8);background-size: 100%; background-position: center;background-repeat: no-repeat;'
-// );
-// imgElem.src = user_info.image.url;
-// imgDiv.appendChild(imgElem);
-// fetchImageBytes(user_info);
-// }
-
-// function getCookies(domain, name, callback) {
-// 		chrome.cookies.get({
-// 			"url": domain,
-// 			"name": name
-// 		}, function (cookie) {
-// 			if (callback) {
-// 				callback(cookie.value);
-// 			}
-// 		});
-// 	}
-// getCookies("http://www.stackoverflow.com", "id", function (id) {
-// 	alert(id);
-// });
-
-// function createBrandLink(name) {
-// 	var div = document.querySelector('.brand-holder');
-// 	var brandLink = document.createElement('a');
-// 	brandLink.href = 'http://' + name + '.com';
-// 	brandLink.innerText = name
-// 	console.log(brandLink);
-// 	div.appendChild(brandLink);
-// }
-
-// function createBrandLogo(name) {
-// 	var div = document.querySelector('.brand-img-holder');
-// 	var divBack = document.querySelector('.background-brand');
-// 	var brandLogo = document.querySelector('.brand-logo');
-// 	var imgLoc = 'images/' + name + '.png';
-// 	brandLogo.src = imgLoc;
-// 	// divBack.setAttribute("background-image", imgLoc);
-// 	console.log(brandLogo);
-// 	// div.appendChild(brandLogo)
-// 	console.log(div);
-// }
-// 	createBrandLink(brandName);
-// 	createBrandLogo(brandName);
-
-// 	console.log(brandName);
-// }
