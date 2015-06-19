@@ -13,7 +13,7 @@
     "run_at": "document_start"
   }],
   "content_security_policy": "script-src 'self'; object-src 'self'",
-  "description": "Curious?",
+  "description": "Curitab presents users with curated images related to brands and asks interesting questions which are stored for improving market research.",
   "homepage_url": "http://socialdatacollective.com",
   "manifest_version": 2,
   "name": "CuriTab by SDC",
@@ -29,7 +29,7 @@
     ]
   },
   "permissions": ["http://*/*", "https://*/*", "identity", "identity.email",
-    "cookies", "tabs", "storage"
+    "tabs", "storage"
   ],
   "version": "0.1.0"
 }
