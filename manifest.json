@@ -13,7 +13,7 @@
     "run_at": "document_start"
   }],
   "content_security_policy": "script-src 'self'; object-src 'self'",
-  "description": "Curitab presents users with curated images related to brands and asks interesting questions which are stored for improving market research.",
+  "description": "Curitab brings you content from leading brands and asks related questions about users preferences and opinions.",
   "homepage_url": "http://socialdatacollective.com",
   "manifest_version": 2,
   "name": "CuriTab by SDC",
